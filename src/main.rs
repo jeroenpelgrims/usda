@@ -15,10 +15,10 @@ struct Cli {
     output_dir: PathBuf,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-    let path = source_file::download_file(cli.url);
-    println!("{:?}", path);
-    // unzip file
+    let path = source_file::download_file(cli.url)?;
+    let zip_folder = source_file::unzip_file(path)?;
     // import into db
+    Ok(())
 }
