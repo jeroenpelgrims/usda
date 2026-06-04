@@ -1,12 +1,12 @@
 use std::fs;
 use std::fs::File;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use zip::ZipArchive;
 
 pub fn download_file(
     url: url::Url,
-    output_dir: &PathBuf,
+    output_dir: &Path,
 ) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let filename = url
         .path_segments()
@@ -26,10 +26,7 @@ pub fn download_file(
     }
 }
 
-pub fn unzip_file(
-    path: PathBuf,
-    output_dir: &PathBuf,
-) -> Result<PathBuf, Box<dyn std::error::Error>> {
+pub fn unzip_file(path: &Path, output_dir: &Path) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let archive = File::open(&path)?;
     let mut archive = ZipArchive::new(archive)?;
     let filename = path.file_stem().unwrap();

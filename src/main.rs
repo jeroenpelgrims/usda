@@ -1,8 +1,6 @@
-use std::path::PathBuf;
-
 use clap::Parser;
+use std::path::PathBuf;
 use url::Url;
-
 mod source_file;
 
 #[derive(Parser)]
@@ -17,8 +15,8 @@ struct Cli {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-    let path = source_file::download_file(cli.url, &cli.download_dir)?;
-    let zip_folder = source_file::unzip_file(path, &cli.download_dir)?;
+    let path = source_file::download_file(cli.url, cli.download_dir.as_path())?;
+    let zip_folder = source_file::unzip_file(path.as_path(), cli.download_dir.as_path())?;
     let csv_files = glob::glob(&format!("{}/**/*.csv", zip_folder.display()))?
         .filter_map(Result::ok)
         .collect::<Vec<_>>();
