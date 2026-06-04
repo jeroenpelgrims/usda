@@ -12,13 +12,20 @@ struct Cli {
     url: Url,
 
     #[arg(short, long, default_value = "downloads")]
-    output_dir: PathBuf,
+    download_dir: PathBuf,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-    let path = source_file::download_file(cli.url)?;
-    let zip_folder = source_file::unzip_file(path)?;
+    let path = source_file::download_file(cli.url, &cli.download_dir)?;
+    let zip_folder = source_file::unzip_file(path, &cli.download_dir)?;
+    let csv_files = glob::glob(&format!("{}/**/*.csv", zip_folder.display()))?
+        .filter_map(Result::ok)
+        .collect::<Vec<_>>();
+
+    println!("{:?}", csv_files);
+    // csv
+    // import_files()
     // import into db
     Ok(())
 }

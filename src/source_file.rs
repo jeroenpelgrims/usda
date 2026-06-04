@@ -4,12 +4,15 @@ use std::path::PathBuf;
 
 use zip::ZipArchive;
 
-pub fn download_file(url: url::Url) -> Result<PathBuf, Box<dyn std::error::Error>> {
+pub fn download_file(
+    url: url::Url,
+    output_dir: &PathBuf,
+) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let filename = url
         .path_segments()
         .and_then(|seg| seg.last())
         .expect("Couldn't figure out filename from given url");
-    let output_path = PathBuf::from("downloads").join(filename);
+    let output_path = output_dir.join(filename);
 
     match output_path.try_exists()? {
         true => Ok(output_path),
@@ -23,11 +26,13 @@ pub fn download_file(url: url::Url) -> Result<PathBuf, Box<dyn std::error::Error
     }
 }
 
-pub fn unzip_file(path: PathBuf) -> Result<PathBuf, Box<dyn std::error::Error>> {
+pub fn unzip_file(
+    path: PathBuf,
+    output_dir: &PathBuf,
+) -> Result<PathBuf, Box<dyn std::error::Error>> {
     let archive = File::open(&path)?;
     let mut archive = ZipArchive::new(archive)?;
     let filename = path.file_stem().unwrap();
-    let target = PathBuf::from("downloads");
-    archive.extract(&target)?;
-    Ok(target.join(filename))
+    archive.extract(&output_dir)?;
+    Ok(output_dir.join(filename))
 }
