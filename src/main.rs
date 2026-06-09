@@ -1,6 +1,7 @@
 use clap::Parser;
 use std::path::PathBuf;
 use url::Url;
+mod db;
 mod source_file;
 
 #[derive(Parser)]
