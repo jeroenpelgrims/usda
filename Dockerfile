@@ -6,14 +6,11 @@ COPY download.sh /download.sh
 RUN chmod +x /download.sh
 RUN /download.sh
 
-# ENTRYPOINT ["/download.sh"]
-
 # Stage 2: Import csv files into sqlite database
 FROM alpine/sqlite:3.51.2
 
 COPY --from=csv /foundation /foundation
 COPY --from=csv /legacy /legacy
-COPY create-db.sh /create-db.sh
-RUN chmod +x /create-db.sh
+COPY *.sql /
 
-ENTRYPOINT ["/create-db.sh"]
+ENTRYPOINT sqlite3 /out/usda.db < /create-db.sql

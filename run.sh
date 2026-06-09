@@ -1,1 +1,1 @@
-docker build -t usda . && docker run --rm usda
+docker build -t usda . && docker run -v ./out:/out --rm usda
