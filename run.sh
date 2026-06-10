@@ -1,1 +1,1 @@
-docker build -t usda . && docker run -v ./out:/out --rm usda
+docker build --no-cache -t usda . && docker run -v ./out:/out --rm usda

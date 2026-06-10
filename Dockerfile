@@ -11,6 +11,9 @@ FROM alpine/sqlite:3.51.2
 
 COPY --from=csv /foundation /foundation
 COPY --from=csv /legacy /legacy
+COPY create-db.sh /create-db.sh
 COPY *.sql /
 
-ENTRYPOINT sqlite3 /out/usda.db < /create-db.sql
+RUN chmod +x /create-db.sh
+
+ENTRYPOINT /create-db.sh
