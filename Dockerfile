@@ -7,10 +7,10 @@ RUN chmod +x /download.sh
 RUN /download.sh
 
 # Stage 2: Import csv files into sqlite database
-FROM alpine/sqlite:3.51.2
+FROM postgres:18
 
 COPY --from=csv /foundation /foundation
 COPY --from=csv /legacy /legacy
-COPY *.sql /
+COPY seed.sql /docker-entrypoint-initdb.d/
 
-ENTRYPOINT sqlite3 /out/usda.db < /create-db.sql
+# ENTRYPOINT sqlite3 /out/usda.db < /create-db.sql
