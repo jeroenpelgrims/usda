@@ -10,6 +10,11 @@ FOLDERS="
 "
 FILES="
 	food
+	food_nutrient
+	nutrient
+	food_category
+	food_portion
+	measure_unit
 "
 for folder in $FOLDERS; do
 	for file in $FILES; do
