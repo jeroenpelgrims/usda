@@ -1,5 +1,5 @@
 -- The central food table: every food item in the database
-CREATE TABLE IF NOT EXISTS food (
+CREATE TABLE food (
     fdc_id           INTEGER PRIMARY KEY,
     data_type        TEXT NOT NULL,
     description      TEXT NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS food (
 );
 
 -- The actual nutritional values: one row per nutrient per food
-CREATE TABLE IF NOT EXISTS food_nutrient (
+CREATE TABLE food_nutrient (
     id                INTEGER PRIMARY KEY,
     fdc_id            INTEGER NOT NULL REFERENCES food(fdc_id),
     nutrient_id       INTEGER NOT NULL REFERENCES nutrient(id),
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS food_nutrient (
 );
 
 -- The nutrient dictionary: translates nutrient_id into a name and unit
-CREATE TABLE IF NOT EXISTS nutrient (
+CREATE TABLE nutrient (
     id          INTEGER PRIMARY KEY,
     name        TEXT NOT NULL,
     unit_name   TEXT NOT NULL,
@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS nutrient (
 
 
 -- Food category hierarchy
-CREATE TABLE IF NOT EXISTS food_category (
+CREATE TABLE food_category (
     id          INTEGER PRIMARY KEY,
     code        TEXT,
     description TEXT NOT NULL
 );
 
 -- Serving size / portion data for each food
-CREATE TABLE IF NOT EXISTS food_portion (
+CREATE TABLE food_portion (
     id                  INTEGER PRIMARY KEY,
     fdc_id              INTEGER NOT NULL REFERENCES food(fdc_id),
     seq_num             INTEGER,
@@ -55,13 +55,13 @@ CREATE TABLE IF NOT EXISTS food_portion (
 );
 
 -- Measurement unit dictionary (cups, tbsp, etc.)
-CREATE TABLE IF NOT EXISTS measure_unit (
+CREATE TABLE measure_unit (
     id   INTEGER PRIMARY KEY,
     name TEXT NOT NULL
 );
 
 -- Branded / commercial product details
--- CREATE TABLE IF NOT EXISTS branded_food (
+-- CREATE TABLE branded_food (
 --     fdc_id                       INTEGER PRIMARY KEY REFERENCES food(fdc_id),
 --     brand_owner                  TEXT,
 --     brand_name                   TEXT,
@@ -85,12 +85,3 @@ CREATE TABLE IF NOT EXISTS measure_unit (
 --     material_code                TEXT
 -- );
 
-
--- Create staging tables
-CREATE TABLE IF NOT EXISTS food_staging AS SELECT * FROM food WHERE 0;
-CREATE TABLE IF NOT EXISTS food_nutrient_staging AS SELECT * FROM food_nutrient WHERE 0;
-CREATE TABLE IF NOT EXISTS nutrient_staging AS SELECT * FROM nutrient WHERE 0;
-CREATE TABLE IF NOT EXISTS food_category_staging AS SELECT * FROM food_category WHERE 0;
-CREATE TABLE IF NOT EXISTS food_portion_staging AS SELECT * FROM food_portion WHERE 0;
-CREATE TABLE IF NOT EXISTS measure_unit_staging AS SELECT * FROM measure_unit WHERE 0;
--- CREATE TABLE IF NOT EXISTS branded_food_staging AS SELECT * FROM branded_food WHERE 0;
