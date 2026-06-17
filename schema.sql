@@ -34,7 +34,7 @@ CREATE TABLE nutrient (
 
 -- Food category hierarchy
 CREATE TABLE food_category (
-    id          INTEGER PRIMARY KEY,
+    id          INTEGER NOT NULL REFERENCES food(fdc_id),
     code        TEXT,
     description TEXT NOT NULL
 );
