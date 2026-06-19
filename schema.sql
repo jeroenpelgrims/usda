@@ -2,7 +2,7 @@
 CREATE TABLE food (
     fdc_id           INTEGER PRIMARY KEY,
     data_type        TEXT NOT NULL,
-    description      TEXT NOT NULL,
+    description      TEXT NOT NULL UNIQUE,
     food_category_id TEXT,
     publication_date DATE
 );
