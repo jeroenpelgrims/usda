@@ -4,7 +4,7 @@ RUN apk add --no-cache curl grep sed
 
 COPY download.sh /download.sh
 RUN chmod +x /download.sh
-RUN /download.sh
+RUN /download.sh /
 
 # Stage 2: Import csv files into sqlite database
 FROM alpine/sqlite:3.53.2

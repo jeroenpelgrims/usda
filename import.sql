@@ -45,3 +45,13 @@ SELECT fps.*
 FROM food_portion_staging fps
 INNER JOIN food f
     ON CAST(fps.fdc_id AS INTEGER) = f.fdc_id;
+
+
+.print 'Dropping staging tables'
+DROP TABLE food_staging;
+DROP TABLE nutrient_staging;
+DROP TABLE food_nutrient_staging;
+DROP TABLE measure_unit_staging;
+DROP TABLE food_portion_staging;
+
+VACUUM;

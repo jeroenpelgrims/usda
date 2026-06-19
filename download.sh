@@ -1,4 +1,10 @@
 #!/bin/sh
+
+output_folder="${1:-.}"
+foundation_folder="${output_folder}/foundation"
+legacy_folder="${output_folder}/legacy"
+mkdir -p $foundation_folder $legacy_folder
+
 echo "Finding most recent dataset files"
 all_files=$(curl -s "https://fdc.nal.usda.gov/download-datasets/" \
   | grep -oP 'href="\K[^"]+' \
@@ -10,13 +16,12 @@ echo "	Foundation dataset: $(basename $foundation_food)"
 echo "	SR Legacy dataset: $(basename $sr_legacy)"
 
 echo "Downloading datasets"
-curl -s -o /foundation.zip "$foundation_food" 
-curl -s -o /legacy.zip "$sr_legacy" 
+curl -s -o "${foundation_folder}.zip" "$foundation_food" 
+curl -s -o "${legacy_folder}.zip" "$sr_legacy" 
 
-echo "Unzipping datasets"
-unzip -jq /foundation.zip -d /foundation
-unzip -jq /legacy.zip -d /legacy
+unzip -jq "${foundation_folder}.zip" -d "${foundation_folder}" 
+unzip -jq "${legacy_folder}.zip"  -d "${legacy_folder}" 
 
-
-ls /foundation
-ls /legacy
+echo "Deleting zip files"
+rm "${foundation_folder}.zip" 
+rm "${legacy_folder}.zip" 
