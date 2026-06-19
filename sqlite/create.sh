@@ -1,6 +1,8 @@
 #!/bin/sh
 
-DB_FILE=/out/usda.db
+dataset_folder="${1:-out}"
+output_folder="${2:-out}"
+DB_FILE="${output_folder}/usda.db"
 
 
 # Remove old file if it exists
@@ -9,7 +11,7 @@ rm -f $DB_FILE
 
 # Create tables and staging tables
 echo "Creating tables"
-sqlite3 $DB_FILE < /schema.sql
+sqlite3 $DB_FILE < ./sqlite/schema.sql
 
 
 # Import data to staging tables
@@ -28,7 +30,7 @@ FILES="
 skip=""
 for folder in $FOLDERS; do
 	for file in $FILES; do
-		file_path="/${folder}/${file}.csv"
+		file_path="${dataset_folder}/${folder}/${file}.csv"
 		table_name="${file}_staging"
 		echo "Importing '${file_path}' into $table_name"
 		sqlite3 "$DB_FILE" <<-EOF
@@ -44,4 +46,4 @@ done
 
 # Filter & import from staging to real tables
 echo "Importing into real tables"
-sqlite3 "$DB_FILE" < /import.sql
+sqlite3 "$DB_FILE" < ./sqlite/import.sql

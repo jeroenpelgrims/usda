@@ -1,5 +1,8 @@
 data:
 	./download.sh ./out
 
-sqlite:
+sqlite: data
+	./sqlite/create.sh ./out
+
+docker:
 	docker build --no-cache -t usda . && docker run -v ./out:/out --rm usda

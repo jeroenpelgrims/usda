@@ -1,10 +1,12 @@
 #!/bin/sh
 
 # Define where the files will be output
-output_folder="${1:-.}"
+output_folder="${1:-out}"
 foundation_folder="${output_folder}/foundation"
 legacy_folder="${output_folder}/legacy"
+rm -r $foundation_folder $legacy_folder
 mkdir -p $foundation_folder $legacy_folder
+
 
 # Find urls of data files
 echo "Finding most recent dataset files"
