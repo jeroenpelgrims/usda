@@ -4,7 +4,7 @@
 output_folder="${1:-out}"
 foundation_folder="${output_folder}/foundation"
 legacy_folder="${output_folder}/legacy"
-rm -r $foundation_folder $legacy_folder
+rm -rf $foundation_folder $legacy_folder
 mkdir -p $foundation_folder $legacy_folder
 
 

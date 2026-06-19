@@ -1,7 +1,7 @@
 #!/bin/sh
 
-dataset_folder="${1:-out}"
-output_folder="${2:-out}"
+dataset_folder="${1:-./out/datasets}"
+output_folder="${2:-./out}"
 DB_FILE="${output_folder}/usda.db"
 
 

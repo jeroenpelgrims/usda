@@ -1,8 +1,11 @@
-data:
-	./download.sh ./out
+.PHONY: sqlite data clean
+sqlite: ./out/usda.db
+data: ./out/datasets
+clean:
+	rm -rf out
 
-sqlite: data
-	./sqlite/create.sh ./out
+./out/datasets:
+	./download.sh ./out/datasets
 
-docker:
-	docker build --no-cache -t usda . && docker run -v ./out:/out --rm usda
+./out/usda.db: out/datasets
+	./sqlite/create.sh ./out/datasets ./out
