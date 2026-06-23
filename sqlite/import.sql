@@ -50,6 +50,7 @@ INNER JOIN food f
 .print 'Dropping staging tables'
 DROP TABLE food_staging;
 DROP TABLE nutrient_staging;
+DROP TABLE food_category_staging;
 DROP TABLE food_nutrient_staging;
 DROP TABLE measure_unit_staging;
 DROP TABLE food_portion_staging;
