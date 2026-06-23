@@ -1,9 +1,16 @@
+-- Food category hierarchy
+CREATE TABLE food_category (
+    id          INTEGER PRIMARY KEY,
+    code        TEXT,
+    description TEXT NOT NULL
+);
+
 -- The central food table: every food item in the database
 CREATE TABLE food (
     fdc_id           INTEGER PRIMARY KEY,
     data_type        TEXT NOT NULL,
     description      TEXT NOT NULL UNIQUE,
-    food_category_id TEXT,
+    food_category_id INTEGER REFERENCES food_category(id),
     publication_date DATE
 );
 
@@ -12,12 +19,12 @@ CREATE TABLE food_nutrient (
     id                INTEGER PRIMARY KEY,
     fdc_id            INTEGER NOT NULL REFERENCES food(fdc_id),
     nutrient_id       INTEGER NOT NULL REFERENCES nutrient(id),
-    amount            NUMERIC,
+    amount            REAL,
     data_points       TEXT,
     derivation_id     TEXT,
-    min               NUMERIC,
-    max               NUMERIC,
-    median            NUMERIC,
+    min               REAL,
+    max               REAL,
+    median            REAL,
     footnote          TEXT,
     min_year_acquired TEXT
 );
@@ -28,15 +35,7 @@ CREATE TABLE nutrient (
     name        TEXT NOT NULL,
     unit_name   TEXT NOT NULL,
     nutrient_nbr TEXT,
-    rank        NUMERIC
-);
-
-
--- Food category hierarchy
-CREATE TABLE food_category (
-    id          INTEGER NOT NULL REFERENCES food(fdc_id),
-    code        TEXT,
-    description TEXT NOT NULL
+    rank        INTEGER
 );
 
 -- Serving size / portion data for each food
@@ -44,11 +43,11 @@ CREATE TABLE food_portion (
     id                  INTEGER PRIMARY KEY,
     fdc_id              INTEGER NOT NULL REFERENCES food(fdc_id),
     seq_num             INTEGER,
-    amount              NUMERIC,
+    amount              REAL,
     measure_unit_id     INTEGER REFERENCES measure_unit(id),
     portion_description TEXT,
     modifier            TEXT,
-    gram_weight         NUMERIC,
+    gram_weight         REAL,
     data_points         TEXT,
     footnote           TEXT,
     min_year_acquired   TEXT

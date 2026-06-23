@@ -5,6 +5,8 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 COPY ./out/usda.db /data/usda.db
+COPY ./postgres/usda.load /data/usda.load
+COPY ./postgres/transforms.lisp /tmp/transforms.lisp
 RUN chmod 644 /data/usda.db
 COPY ./postgres/seed.sh /docker-entrypoint-initdb.d/99_seed.sh
 RUN chmod +x /docker-entrypoint-initdb.d/99_seed.sh
