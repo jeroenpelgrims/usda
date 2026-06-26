@@ -1,0 +1,9 @@
+services:
+  usda:
+    image: usda
+    env_file: ../.env
+    volumes:
+      - ../out/usda.db:/data/usda.db:ro
+      # - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
