@@ -1,5 +1,8 @@
-.PHONY: sqlite data clean postgres
+.DEFAULT_GOAL := all
+.PHONY: all sqlite data clean postgres
 
+all: postgres
+	docker compose up -d
 sqlite: ./out/usda.db
 data: ./out/datasets
 
@@ -13,4 +16,4 @@ clean:
 	./sqlite/create.sh ./out/datasets ./out
 
 postgres: sqlite
-	docker build -f postgres/Dockerfile .
+	docker build -t usda -f postgres/Dockerfile . 

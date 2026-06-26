@@ -1,8 +1,9 @@
 services:
   usda:
-    build:
-      context: ./
-      dockerfile: ./postgres/Dockerfile
+    image: usda
+    # build:
+    #   context: ./
+    #   dockerfile: ./postgres/Dockerfile
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
